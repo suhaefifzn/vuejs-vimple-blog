@@ -14,6 +14,7 @@ const pageNumber = ref(1);
 const hasNextPage = ref(true);
 const isLoading = ref(false);
 const internalErrorStatus = ref(false);
+const message = ref('Loading...');
 
 const metaTags = computed(() => {
     if (internalErrorStatus.value) {
@@ -59,6 +60,11 @@ const fetchArticles = async () => {
     try {
         response.value = await articleService.getArticlesByCategory('anime', pageNumber.value);
         const { data: { articles, meta } } = response.value;
+
+        if (articles.length === 0) {
+            message.value = 'Articles not found.';
+        }
+
         listArticles.value = [...listArticles.value, ...articles];
         pageNumber.value = meta.current_page + 1;
         hasNextPage.value = meta.next_page_url !== null;
@@ -104,12 +110,12 @@ onMounted(async () => {
     <template v-if="listArticles">
         <template v-if="listArticles.length > 0">
             <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <ArticleCard :articles="listArticles"/>
+                <ArticleCard :articles="listArticles"/>
             </div>
         </template>
         <template v-else>
             <div style="min-height: 720px;">
-                <p class="text-center">Articles not found.</p>
+                <p>{{ message }}</p>
             </div>
         </template>
     </template>
@@ -119,5 +125,3 @@ onMounted(async () => {
         </div>
     </template>
 </template>
-
-<style scoped></style>

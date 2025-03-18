@@ -8,6 +8,7 @@ const articleService = new ArticleService();
 const route = useRoute();
 const article = ref(null);
 const internalErrorStatus = ref(false);
+const message = ref('Loading...');
 
 onBeforeMount(async () => {
     try {
@@ -15,6 +16,7 @@ onBeforeMount(async () => {
 
         if (response.statusCode == 404) {
             article.value = null;
+            message.value = 'Article not found.';
         }
 
         const { data } = response;
@@ -125,17 +127,17 @@ watch(article, async (newVal) => {
         </template>
         <template v-else-if="internalErrorStatus">
             <div style="min-height: 720px;">
-                <p class="text-center">Internal server error.</p>
+                <p>Internal server error.</p>
             </div>
         </template>
         <template v-else-if="article == null && !internalErrorStatus">
             <div style="min-height: 720px;">
-                <p class="text-center">Article not found.</p>
+                <p>{{ message }}</p>
             </div>
         </template>
         <template v-else>
             <div style="min-height: 720px;">
-                <p class="text-center">Loading...</p>
+                <p>Loading...</p>
             </div>
         </template>
     </div>
