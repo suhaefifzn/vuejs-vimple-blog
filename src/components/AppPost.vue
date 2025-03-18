@@ -32,16 +32,14 @@ const metaTags = computed(() => {
         return {
             title: 'Internal server error',
             meta: [
-                { name: 'description', content: 'Internal server error' },
-                { name: 'robots', content: 'noindex, nofollow' }
+                { name: 'description', content: 'Internal server error' }
             ]
         };
     } else if (!article.value && !internalErrorStatus.value) {
         return {
             title: 'Loading...',
             meta: [
-                { name: 'description', content: 'Article not found' },
-                { name: 'robots', content: 'noindex, nofollow' }
+                { name: 'description', content: 'Article not found' }
             ]
         };
     }
