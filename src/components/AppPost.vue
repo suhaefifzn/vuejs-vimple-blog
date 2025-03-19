@@ -47,7 +47,7 @@ useHead(metaTags);
                         <a href="/" class="text-decoration-none">Home</a>
                     </li>
                     <li class="breadcrumb-item small">
-                        <a href="/anime" class="text-decoration-none">Anime</a>
+                        <a :href="`/${article.category.slug}`" class="text-decoration-none">{{ article.category.name }}</a>
                     </li>
                     <li class="breadcrumb-item small active" aria-current="page">
                         {{ article.title }}
