@@ -3,8 +3,8 @@ import { useRoute } from 'vue-router';
 import { useHead } from '@unhead/vue';
 
 // JSON Assets
-import animePosts from '../assets/posts/anime.json';
-import gamePosts from '../assets/posts/game.json';
+import animePosts from '../../public/assets/posts/anime.json';
+import gamePosts from '../../public/assets/posts/game.json';
 
 const posts = [...animePosts.articles, ...gamePosts.articles];
 const slug = useRoute().params.slug;

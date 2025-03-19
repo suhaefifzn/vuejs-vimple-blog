@@ -5,7 +5,7 @@ import { useHead } from '@unhead/vue';
 import ArticleCard from './ArticleCard.vue';
 
 // JSON Assets
-import posts from '../assets/posts/home.json';
+import posts from '../../public/assets/posts/home.json';
 
 const { articles: { latest, per_categories } } = posts;
 const latestArticle = latest;

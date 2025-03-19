@@ -5,7 +5,7 @@ import { useHead } from '@unhead/vue';
 import ArticleCard from './ArticleCard.vue';
 
 // JSON Assets
-import posts from '../assets/posts/game.json';
+import posts from '../../public/assets/posts/game.json';
 
 const { articles } = posts;
 const listArticles = articles;
