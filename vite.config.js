@@ -13,5 +13,22 @@ export default defineConfig({
         { src: './src/components/assets/posts/game.json', dest: 'assets/posts' } // Copy ke dist/
       ]
     })
-  ]
+  ],
+  build: {
+    // build dalam satu file
+    lib: {
+      entry: 'src/main.js',
+      name: 'MyApp',
+      fileName: 'bundle',
+      formats: ['iife']
+    },
+    rollupOptions: {
+      input: {
+        index: 'index.html',
+      },
+      output: {
+        inlineDynamicImports: true,
+      }
+    }
+  }
 })
