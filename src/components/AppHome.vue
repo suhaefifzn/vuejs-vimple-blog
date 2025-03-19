@@ -1,63 +1,32 @@
 <script setup>
-import { ref, onBeforeMount, computed } from 'vue';
 import { useHead } from '@unhead/vue';
-import { ArticleService } from '../services/articleService';
 
 // Components
 import ArticleCard from './ArticleCard.vue';
 
-const articleService = new ArticleService();
-const response = ref(null);
-const latestArticle = ref(null);
-const articlesPerCategory = ref([]);
-const internalErrorStatus = ref(false);
+// JSON Assets
+import posts from '../assets/posts/home.json';
 
-const metaTags = computed(() => {
-    if (internalErrorStatus.value) {
-        return {
-            title: 'Internal server error',
-            meta: [
-                { name: 'description', content: 'Internal server error' }
-            ]
-        };
-    } else if (!latestArticle.value && !internalErrorStatus.value) {
-        return {
-            title: 'Loading...',
-            meta: [
-                { name: 'description', content: 'Article not found' }
-            ]
-        };
-    }
+const { articles: { latest, per_categories } } = posts;
+const latestArticle = latest;
+const articlesPerCategory = per_categories;
 
-    return {
-        title: 'Nerd Counter',
-        meta: [
-            { name: 'description', content: 'Find various interesting posts about anime and games only on Nerd Counter.' },
-            { name: 'keywords', content: 'Nerd Counter, Anime, Game' },
-            { name: 'author', content: 'Inarien' },
-            { name: 'rating', content: 'general' },
-            { name: 'canonical', content: 'https://www.nerdcounter.com' },
-            { property: 'og:title', content: 'Nerd Counter' },
-            { property: 'og:url', content: 'https://www.nerdcounter.com' },
-            { property: 'og:description', content: 'Find various interesting posts about anime and games only on Nerd Counter.' }
-        ]
-    };
-});
+const metaTags = {
+    title: 'Nerd Counter',
+    meta: [
+        { name: 'description', content: 'Find various interesting posts about anime and games only on Nerd Counter.' },
+        { name: 'keywords', content: 'Nerd Counter, Anime, Game' },
+        { name: 'author', content: 'Inarien' },
+        { name: 'rating', content: 'general' },
+        { name: 'canonical', content: 'https://www.nerdcounter.com' },
+        { property: 'og:title', content: 'Nerd Counter' },
+        { property: 'og:url', content: 'https://www.nerdcounter.com' },
+        { property: 'og:description', content: 'Find various interesting posts about anime and games only on Nerd Counter.' }
+    ]
+};
 
 // Register meta tags
 useHead(metaTags);
-
-onBeforeMount(async () => {
-    try {
-        response.value = await articleService.getArticlesForHomePage();
-        const { data: { articles } } = response.value;
-        latestArticle.value = articles.latest;
-        articlesPerCategory.value = articles.per_categories;
-    } catch (error) {
-        console.error('Error:', error);
-        internalErrorStatus.value = true;
-    }
-});
 </script>
 
 <template>
